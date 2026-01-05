@@ -1,8 +1,7 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { 
-  collection, addDoc, updateDoc, deleteDoc, onSnapshot, doc, query, 
-  getDocs, serverTimestamp 
+  collection, addDoc, updateDoc, deleteDoc, onSnapshot, doc, query, serverTimestamp 
 } from "firebase/firestore";
 import { db } from "./firebase";
 
