@@ -176,23 +176,23 @@ const MobileMenuPanel = () => (
     <div className="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-2xl border-t border-gray-200/50 dark:border-gray-700/50">
       <div className="flex items-center justify-around py-3 px-4 max-w-4xl mx-auto">
         <Link to="/login" className={`flex flex-col items-center gap-1 p-3 rounded-2xl transition-all ${isActive('/login') ? 'bg-primary-500 text-white shadow-xl' : 'hover:bg-primary-100 dark:hover:bg-primary-900/50'}`}>
-          <FaHome className="text-2xl" />
-          <span className="text-xs font-semibold">Home</span>
+          <FaHome className={`text-2xl ${isDark ? 'text-white' : 'text-gray-900'}`} />
+          <span className={`text-xs font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Home</span>
         </Link>
         
         <Link to="/feed" className={`flex flex-col items-center gap-1 p-3 rounded-2xl transition-all relative ${isActive('/feed') ? 'bg-emerald-500 text-white shadow-xl' : 'hover:bg-emerald-100 dark:hover:bg-emerald-900/50'}`}>
-          <FaUserFriends className="text-2xl" />
-          <span className="text-xs font-semibold">Feed</span>
+          <FaUserFriends className={`text-2xl ${isDark ? 'text-white' : 'text-gray-900'}`} />
+          <span className={`text-xs font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Feed</span>
         </Link>
         
         <Link to="/matches" className={`flex flex-col items-center gap-1 p-3 rounded-2xl transition-all relative ${isActive('/matches') ? 'bg-pink-500 text-white shadow-xl' : 'hover:bg-pink-100 dark:hover:bg-pink-900/50'}`}>
-          <FaHeart className="text-2xl" />
+          <FaHeart className={`text-2xl ${isDark ? 'text-white' : 'text-gray-900'}`} />
           {matches.length > 0 && (
             <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-lg">
               {matches.length > 99 ? '99+' : matches.length}
             </div>
           )}
-          <span className="text-xs font-semibold">Matches</span>
+          <span className={`text-xs font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Matches</span>
         </Link>
       </div>
     </div>

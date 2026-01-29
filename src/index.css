@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; height: 100vh;}
 
 @keyframes blob {
   0% {

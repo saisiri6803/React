@@ -34,7 +34,7 @@ export default function ProfilePage() {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-blue-50 to-purple-100 dark:from-gray-900 dark:via-gray-800 dark:to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-blue-50 to-purple-100 dark:from-gray-900 dark:via-gray-800 dark:to-slate-900 pb-4">
 
       <div className="fixed top-6 left-6 z-50 lg:hidden">
         <button

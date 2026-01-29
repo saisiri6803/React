@@ -1,6 +1,7 @@
-import { memo } from 'react';
+import { memo, useRef } from 'react';
 import { useOnlineStatus } from '../hooks/useOnlineStatus';
 import type { User } from '../types';
+import { MdFavorite } from 'react-icons/md';
 
 interface SwipeCardProps {
   user: User;
@@ -13,17 +14,38 @@ interface SwipeCardProps {
 const SwipeCard = memo(({ user, onSwipeLeft, onSwipeRight, x, rotate }: SwipeCardProps) => {
   const isOnline = useOnlineStatus();
   const opacity = Math.abs(x) / 150 > 1 ? 0 : 1 - Math.abs(x) / 150;
+  const startX = useRef<number | null>(null);
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    startX.current = e.clientX;
+  };
+
+  const handlePointerUp = (e: React.PointerEvent) => {
+    if (startX.current === null) return;
+
+    const deltaX = e.clientX - startX.current;
+
+    if (deltaX > 80) {
+      onSwipeRight();
+    } else if (deltaX < -80) {
+      onSwipeLeft();
+    }
+
+    startX.current = null;
+  };
 
   return (
     <div
       className="absolute inset-0 w-full max-w-md sm:max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto 
-                 bg-white dark:bg-gray-900 rounded-3xl shadow-2xl p-6 sm:p-8 lg:p-10 
-                 flex flex-col items-center justify-center cursor-grab active:cursor-grabbing 
-                 transition-all duration-300 z-10"
+             bg-white dark:bg-gray-900 rounded-3xl shadow-2xl p-6 sm:p-8 lg:p-10 
+             flex flex-col items-center justify-center cursor-grab active:cursor-grabbing 
+             transition-all duration-300 z-10 touch-none"
       style={{ transform: `translateX(${x}px) rotate(${rotate}deg)`, opacity }}
       role="button"
       tabIndex={0}
       aria-label={`Swipe left to dislike ${user.name.first}, swipe right to like`}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
       onKeyDown={(e) => {
         if (e.key === 'ArrowLeft') onSwipeLeft();
         if (e.key === 'ArrowRight') onSwipeRight();
@@ -43,7 +65,7 @@ const SwipeCard = memo(({ user, onSwipeLeft, onSwipeRight, x, rotate }: SwipeCar
           />
         )}
       </div>
-      
+
       <div className="text-center space-y-2 mb-8 flex-1">
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white">
           {user.name.first}
@@ -53,7 +75,7 @@ const SwipeCard = memo(({ user, onSwipeLeft, onSwipeRight, x, rotate }: SwipeCar
         </p>
       </div>
 
-      <div className="w-full max-w-xs flex gap-4 px-4 sm:px-6">
+      <div className="hidden sm:flex w-full max-w-xs gap-4 px-4 sm:px-6">
         <button
           onMouseDown={() => onSwipeLeft()}
           className="flex-1 p-4 sm:p-5 bg-red-500/10 hover:bg-red-500/20 border-2 border-red-500/30 
@@ -70,7 +92,10 @@ const SwipeCard = memo(({ user, onSwipeLeft, onSwipeRight, x, rotate }: SwipeCar
                      transition-all duration-200 flex items-center justify-center hover:scale-[1.02]"
           aria-label="Like"
         >
-          ❤️ Like
+          <MdFavorite 
+              size={25} 
+              className="drop-shadow-2xl filter brightness-0 invert dark:invert-0 dark:brightness-100"
+            /> Like
         </button>
       </div>
     </div>
